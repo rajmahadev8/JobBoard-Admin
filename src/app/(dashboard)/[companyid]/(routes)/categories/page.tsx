@@ -8,16 +8,20 @@ import {
   useTable,
 } from "@refinedev/antd";
 import { BaseRecord } from "@refinedev/core";
-import { Space, Table } from "antd";
+import { Button, Space, Table } from "antd";
+import { useParams, useRouter } from "next/navigation";
 
 export default function CategoryList() {
-  const { tableProps } = useTable({
-    syncWithLocation: true,
-  });
+  // const { tableProps } = useTable({
+  //   syncWithLocation: true,
+  // });
+  const router = useRouter();
+  const params = useParams();
 
   return (
     <List>
-      <Table {...tableProps} rowKey="id">
+      <Button onClick={()=>{router.push(`/${params.companyid}/categories/create`)}}> Create </Button>
+      <Table rowKey="id" style={{padding:"20px"}}>
         <Table.Column dataIndex="id" title={"ID"} />
         <Table.Column dataIndex="title" title={"title"} />
         <Table.Column

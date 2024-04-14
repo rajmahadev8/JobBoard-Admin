@@ -15,15 +15,17 @@ import React, { useContext } from "react";
 
 const { Text } = Typography;
 const { useToken } = theme;
-
+type headerProps={
+  children: React.ReactNode;
+}
 type IUser = {
   id: number;
   name: string;
   avatar: string;
 };
 
-export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
-  sticky,
+export const Header: React.FC<headerProps> = ({
+  children
 }) => {
   const { token } = useToken();
   const { data: user } = useGetIdentity<IUser>();
@@ -32,20 +34,17 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
   const headerStyles: React.CSSProperties = {
     backgroundColor: token.colorBgElevated,
     display: "flex",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     alignItems: "center",
     padding: "0px 24px",
     height: "64px",
   };
 
-  if (sticky) {
-    headerStyles.position = "sticky";
-    headerStyles.top = 0;
-    headerStyles.zIndex = 1;
-  }
-
   return (
     <AntdLayout.Header style={headerStyles}>
+      <Space style={{display:"flex", justifyContent:"space-between"}}>
+        {children}
+      </Space>
       <Space>
         <Switch
           checkedChildren="🌛"
@@ -53,6 +52,7 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
           onChange={() => setMode(mode === "light" ? "dark" : "light")}
           defaultChecked={mode === "dark"}
         />
+        
         {(user?.name || user?.avatar) && (
           <Space style={{ marginLeft: "8px" }} size="middle">
             {user?.name && <Text strong>{user.name}</Text>}

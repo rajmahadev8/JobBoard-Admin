@@ -1,3 +1,4 @@
+import { GithubFilled, GoogleCircleFilled } from "@ant-design/icons";
 import { AuthPage } from "@components/auth-page";
 import { authProviderServer } from "@providers/auth-provider";
 import { redirect } from "next/navigation";
@@ -9,7 +10,16 @@ export default async function Login() {
     redirect(data?.redirectTo || "/");
   }
 
-  return <AuthPage type="login" />;
+  return <AuthPage
+  type="login"
+  providers={[
+    {
+      name: "google",
+      label: "Sign in with Google",
+      icon: <GoogleCircleFilled />,
+    }
+  ]}
+/>;
 }
 
 async function getData() {
